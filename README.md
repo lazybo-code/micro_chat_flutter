@@ -18,4 +18,7 @@
   <img src="https://github.com/lazybo-code/micro_chat_flutter/blob/master/github/images/WechatIMG47.jpeg" width="200" height="400" />
   <img src="https://github.com/lazybo-code/micro_chat_flutter/blob/master/github/images/WechatIMG48.jpeg" width="200" height="400" />
   <img src="https://github.com/lazybo-code/micro_chat_flutter/blob/master/github/images/WechatIMG49.jpeg" width="200" height="400" />
+  <img src="https://github.com/lazybo-code/micro_chat_flutter/blob/master/github/images/WechatIMG50.jpeg" width="200" height="400" />
+  <img src="https://github.com/lazybo-code/micro_chat_flutter/blob/master/github/images/WechatIMG51.jpeg" width="200" height="400" />
+  <img src="https://github.com/lazybo-code/micro_chat_flutter/blob/master/github/images/WechatIMG52.jpeg" width="200" height="400" />
 </div>
