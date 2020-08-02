@@ -8,21 +8,41 @@ import 'package:micro_chat/types/user_profile_result.dart';
 
 class UserProvider with ChangeNotifier {
   UserLoginResult _userLoginResult = UserLoginResult();
+
   UserLoginResult get userLoginResult => _userLoginResult;
 
   UserProfileResult _userProfileResult = UserProfileResult();
+
   UserProfileResult get userProfileResult => _userProfileResult;
+
+  Future<bool> userRegister({
+    String nickname,
+    String username,
+    String password,
+  }) async {
+    ResultData res = await AuthApi.userRegister(nickname: nickname, username: username, password: password);
+    if(res.isSuccess == false) {
+      BasisTool.showToast(message: res.data['message']);
+    }
+    return res.isSuccess;
+  }
 
   Future<bool> userLogin({
     String username,
     String password,
     String type = 'app',
   }) async {
-    ResultData res = await AuthApi.userLogin(username: username, password: password, type: type);
+    ResultData res = await AuthApi.userLogin(
+      username: username,
+      password: password,
+      type: type,
+    );
     if (res.isSuccess) {
       _userLoginResult = UserLoginResult.fromJson(res.data);
-      await PreferenceTool.saveData('Authorization', _userLoginResult.access_token);
-      await PreferenceTool.saveData('RefreshToken', _userLoginResult.refresh_token);
+      await PreferenceTool.saveData(
+          'Authorization', _userLoginResult.access_token);
+      await PreferenceTool.saveData(
+          'RefreshToken', _userLoginResult.refresh_token);
     } else {
       BasisTool.showToast(message: res.data['message'].toString());
     }

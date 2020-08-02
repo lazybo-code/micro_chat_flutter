@@ -311,7 +311,7 @@ class _LoginPageState extends State<LoginPage>
           enabled: !_dataRegisterLength,
           loading: loading,
           text: "注册",
-          press: onLogin,
+          press: onRegister,
         ),
       ),
     ];
@@ -361,6 +361,24 @@ class _LoginPageState extends State<LoginPage>
       String token = await PreferenceTool.loadData('Authorization');
       socketEventBus.fire(SocketConnectEvent(token));
       Navigator.pop(context);
+    }
+  }
+
+  void onRegister() async {
+    setState(() => loading = true);
+    if (_dataRegister['password'] != _dataRegister['passwordNew']) {
+      BasisTool.showToast(message: "两次密码输入不一致");
+      return;
+    }
+    bool status =
+        await Provider.of<UserProvider>(context, listen: false).userRegister(
+      nickname: _dataRegister['nickname'],
+      username: _dataRegister['username'],
+      password: _dataRegister['password'],
+    );
+    setState(() => loading = false);
+    if (status) {
+      setState(() => _crossFadeState = CrossFadeState.showFirst);
     }
   }
 }
