@@ -5,6 +5,7 @@ import 'package:micro_chat/pages/auth/login_page.dart';
 import 'package:micro_chat/pages/details/chat_message_details_page.dart';
 import 'package:micro_chat/pages/details/friend_details_page.dart';
 import 'package:micro_chat/pages/main/home_page.dart';
+import 'package:micro_chat/pages/query/query_friend_page.dart';
 import 'package:micro_chat/tools/basis_tool.dart';
 
 import 'details/friend_news_details_page.dart';
@@ -60,6 +61,7 @@ class App extends StatelessWidget {
         '/friend-details': (BuildContext context) => FriendDetailsPage(),
         '/friend-news-details': (BuildContext context) => FriendNewsDetailsPage(),
         '/qr-code-details': (BuildContext context) => QrCodeDetailsPage(),
+        '/query-friend': (BuildContext context) => QueryFriendPage(),
       },
       initialRoute: '/login',
       localizationsDelegates: [

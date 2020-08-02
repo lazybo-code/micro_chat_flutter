@@ -23,4 +23,21 @@ class FriendsApi {
     }
     return await RequestTool.getInstance().put('/friends/status', data);
   }
+
+  /// 查找好友
+  static Future<ResultData> queryFriends(String query) async {
+    return await RequestTool.getInstance().get('/friends/query', params: { 'query': query });
+  }
+
+  /// 添加好友
+  static Future<ResultData> addFriend(int friendId, String description, { String remark }) async {
+    Map<String, dynamic> data = {
+      'friendId': "$friendId",
+      'description': description,
+    };
+    if (remark != null) {
+      data['remark'] = remark;
+    }
+    return await RequestTool.getInstance().post('/friends', data);
+  }
 }

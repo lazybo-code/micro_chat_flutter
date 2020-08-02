@@ -3,6 +3,7 @@ import 'package:micro_chat/api/friends_api.dart';
 import 'package:micro_chat/tools/basis_tool.dart';
 import 'package:micro_chat/tools/dio/result_data.dart';
 import 'package:micro_chat/types/friends_list_result.dart';
+import 'package:micro_chat/types/query_friends_result.dart';
 
 class FriendsProvider with ChangeNotifier {
   Map<String, dynamic> _friends = {};
@@ -10,6 +11,9 @@ class FriendsProvider with ChangeNotifier {
 
   List<FriendsListItemResult> _friendsApply = [];
   List<FriendsListItemResult> get friendsApply => _friendsApply;
+
+  List<QueryFriendsResult> _queryFriends = [];
+  List<QueryFriendsResult> get queryFriends => _queryFriends;
 
   Future<bool> getFriends({ isLoad: false }) async {
     if (_friends.keys.length > 0 && isLoad == false) {
@@ -37,6 +41,24 @@ class FriendsProvider with ChangeNotifier {
     } else {
       BasisTool.showToast(message: res.data['message'].toString());
     }
+    return res.isSuccess;
+  }
+
+  Future getQueryFriends(String query) async {
+    ResultData res = await FriendsApi.queryFriends(query);
+    if(res.isSuccess) {
+      _queryFriends = (res.data as List<dynamic>).map((e) => QueryFriendsResult.fromJson(e)).toList();
+      notifyListeners();
+    }
+  }
+
+  Future<bool> addFriend(String query, int friendId, String description, { String remark }) async {
+    ResultData res = await FriendsApi.addFriend(friendId, description, remark: remark);
+    if(res.isSuccess == false) {
+      BasisTool.showToast(message: res.data['message'].toString());
+    }
+    await getQueryFriends(query);
+    notifyListeners();
     return res.isSuccess;
   }
 }

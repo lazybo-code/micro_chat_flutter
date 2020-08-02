@@ -3,7 +3,6 @@ import 'package:micro_chat/components/chat_message_item_view.dart';
 import 'package:micro_chat/components/toast.dart';
 import 'package:micro_chat/icon/chat_icon.dart';
 import 'package:micro_chat/provider/friends_provider.dart';
-import 'package:micro_chat/tools/basis_tool.dart';
 import 'package:micro_chat/types/friends_list_result.dart';
 import 'package:provider/provider.dart';
 
@@ -72,43 +71,34 @@ class _FriendNewsDetailsPageState extends State<FriendNewsDetailsPage> {
       elevation: .5,
       titleSpacing: 0,
       title: Text('新的朋友'),
-      actions: <Widget>[
-        GestureDetector(
+      bottom: PreferredSize(
+        child: GestureDetector(
           child: Container(
-            padding: EdgeInsets.only(right: 20),
-            alignment: Alignment.center,
-            child: Text(
-              '新的朋友',
-              style: TextStyle(fontWeight: FontWeight.w500),
+            margin: EdgeInsets.only(left: 20, right: 20, bottom: 8),
+            padding: EdgeInsets.symmetric(vertical: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: _theme.primaryColorDark.withOpacity(.04),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  ChatIcon.sousuo,
+                  color: _theme.dividerColor.withOpacity(.4),
+                  size: 20,
+                ),
+                SizedBox(width: 2),
+                Text(
+                  '微聊号/昵称',
+                  style: TextStyle(
+                    color: _theme.dividerColor.withOpacity(.4),
+                  ),
+                ),
+              ],
             ),
           ),
-        ),
-      ],
-      bottom: PreferredSize(
-        child: Container(
-          margin: EdgeInsets.only(left: 20, right: 20, bottom: 8),
-          padding: EdgeInsets.symmetric(vertical: 5),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: _theme.primaryColorDark.withOpacity(.04),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Icon(
-                ChatIcon.sousuo,
-                color: _theme.dividerColor.withOpacity(.4),
-                size: 20,
-              ),
-              SizedBox(width: 2),
-              Text(
-                '微聊号/昵称',
-                style: TextStyle(
-                  color: _theme.dividerColor.withOpacity(.4),
-                ),
-              ),
-            ],
-          ),
+          onTap: () => Navigator.pushNamed(context, '/query-friend'),
         ),
         preferredSize: Size.fromHeight(35),
       ),

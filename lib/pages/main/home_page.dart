@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
       actions: <Widget>[
         IconButton(
           icon: Icon(ChatIcon.sousuo),
-          onPressed: () {},
+          onPressed: () => Navigator.pushNamed(context, '/query-friend'),
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
         ),

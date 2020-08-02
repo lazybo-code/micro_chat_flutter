@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:micro_chat/components/cache_net_image.dart';
 
-enum ChatListStyle { message, friend, apply }
+enum ChatListStyle { message, friend, apply, custom }
 
 class ChatListItemView extends StatefulWidget {
   final String image;
@@ -16,6 +16,7 @@ class ChatListItemView extends StatefulWidget {
   final Color loadingBackgroundColor;
   final String status;
   final ValueChanged<String> onApply;
+  final Widget custom;
 
   const ChatListItemView({
     Key key,
@@ -31,6 +32,7 @@ class ChatListItemView extends StatefulWidget {
     this.loadingBackgroundColor = Colors.white,
     this.status,
     this.onApply,
+    this.custom,
   }) : super(key: key);
 
   @override
@@ -101,6 +103,9 @@ class _ChatListItemViewState extends State<ChatListItemView>
     if (widget.style == ChatListStyle.apply) {
       return _applyTextItem();
     }
+    if (widget.style == ChatListStyle.custom) {
+      return _customTextItem();
+    }
     return Text(
       widget.title,
       style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
@@ -129,6 +134,24 @@ class _ChatListItemViewState extends State<ChatListItemView>
       onTapDown: (_) => _controller.forward(),
       onTapUp: (_) => _controller.reverse(),
       onTapCancel: () => _controller.reverse(),
+    );
+  }
+
+  Widget _customTextItem() {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Text(
+            widget.title,
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 18,
+            ),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        widget.custom,
+      ],
     );
   }
 
@@ -173,28 +196,28 @@ class _ChatListItemViewState extends State<ChatListItemView>
                   children: <Widget>[
                     SizedBox(
                       width: 65,
-                      child: GestureDetector(
-                        child: RaisedButton(
-                          color: _theme.primaryColor,
-                          onPressed: () {
-                            if (widget.onApply != null) widget.onApply('agree');
-                          },
-                          child: Text('同意', style: TextStyle(color: _theme.primaryColorDark),),
+                      child: RaisedButton(
+                        color: _theme.primaryColor,
+                        onPressed: () {
+                          if (widget.onApply != null) widget.onApply('agree');
+                        },
+                        child: Text(
+                          '同意',
+                          style: TextStyle(color: _theme.primaryColorDark),
                         ),
                       ),
                     ),
                     SizedBox(
                       width: 65,
-                      child: GestureDetector(
-                        child: RaisedButton(
-                          color: Colors.redAccent.withOpacity(.8),
-                          textColor: Colors.white,
-                          splashColor: Colors.red,
-                          onPressed: () {
-                            if (widget.onApply != null) widget.onApply('refusal');
-                          },
-                          child: Text('拒绝'),
-                        ),
+                      child: RaisedButton(
+                        color: Colors.redAccent.withOpacity(.8),
+                        textColor: Colors.white,
+                        splashColor: Colors.red,
+                        onPressed: () {
+                          if (widget.onApply != null)
+                            widget.onApply('refusal');
+                        },
+                        child: Text('拒绝'),
                       ),
                     ),
                   ],
